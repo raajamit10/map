@@ -1,0 +1,17 @@
+{
+  "name": "quantum-map",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n SERVER,CLIENT,SIM \"npm run server\" \"npm run client\" \"npm run sim\"",
+
+    "server": "cd server && node index.js",
+
+    "client": "cd client && npm run dev",
+
+    "sim": "cd simulation && py bot_logic.py"
+  },
+  "dependencies": {
+    "concurrently": "^9.0.0"
+  }
+}
