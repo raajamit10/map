@@ -181,6 +181,9 @@ function App() {
   const [darkMode, setDarkMode] = useState(true);
   const [viewMode, setViewMode] = useState('MAP');
 
+  const addLog = (msg) => setLogs(prev => [`> ${msg}`, ...prev.slice(0, 6)]);
+  const spawnDisaster = (lat, lng) => socket.emit("create_disaster", { lat, lng, type: "Fire" });
+
   useEffect(() => {
     socket.on("connect", () => addLog("System Online: Connected to Roorkee Grid"));
     socket.on("map_update", (data) => setBots((prev) => ({ ...prev, [data.agentId]: data })));
@@ -203,9 +206,6 @@ function App() {
 
     return () => { socket.off("map_update"); socket.off("disaster_spawned"); socket.off("disaster_resolved"); };
   }, []);
-
-  const addLog = (msg) => setLogs(prev => [`> ${msg}`, ...prev.slice(0, 6)]);
-  const spawnDisaster = (lat, lng) => socket.emit("create_disaster", { lat, lng, type: "Fire" });
 
   const connections = useMemo(() => {
     const botList = Object.values(bots);
